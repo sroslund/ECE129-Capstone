@@ -19,12 +19,12 @@
 #define ENA 5       //  ENA pin
  
 
-#define FRONT 170       // steering to front 
-int SHARP_RIGHT=FRONT+33;
-int SHARP_LEFT=FRONT-40;
-int  RIGHT=FRONT+16;
-int  LEFT=FRONT-20;
-  
+#define FRONT 130 // MAX 180,       // steering to front 
+int SHARP_RIGHT=FRONT+50; // max +50
+int SHARP_LEFT=FRONT-50; // max -50
+int  RIGHT=FRONT+10;
+int  LEFT=FRONT-10;
+
 #define DELAY_TIME 1000   
   
 #define LFSensor_0 A0  //OLD D3
