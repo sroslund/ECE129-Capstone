@@ -1,16 +1,11 @@
-/*  ___   ___  ___  _   _  ___   ___   ____ ___  ____  
- * / _ \ /___)/ _ \| | | |/ _ \ / _ \ / ___) _ \|    \ 
- *| |_| |___ | |_| | |_| | |_| | |_| ( (__| |_| | | | |
- * \___/(___/ \___/ \__  |\___/ \___(_)____)___/|_|_|_|
- *                  (____/ 
- * OSOYOO SG90 steering car Lesson 3 Line tracking
- * Tutorial URL https://osoyoo.com/?p=37188
- * CopyRight www.osoyoo.com
-
- * This project will show you how to make Osoyoo robot car in auto drive mode and avoid obstacles
- *   
- * 
+/*  
+ *  Motion Uno code done
+ * Protocol: [+-,#,#,:,#,#]
+ * Steering angle (-45,+45) : Throttle percentage (00,99)
+ * !Need to import two digits for throttle percentage 
+ * Robert Box
  */
+ 
 #include <PWMServo.h>
 
  
