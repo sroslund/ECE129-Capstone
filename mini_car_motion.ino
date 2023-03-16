@@ -49,30 +49,34 @@ void go_Back(int speed)  //Forward
    analogWrite(ENA,speed);
 }
  
-void go_Advance(int pwm)
+void go_Advance(int throttle_percentage)
 {
 
   digitalWrite(IN1, LOW);
   digitalWrite(IN2,HIGH);
- 
+  unsigned int pwm = throttle_percentage + 150;
   if(pwm > FAST_SPEED) {
     pwm = FAST_SPEED;    
   }
-  if(pwm < SLOW_SPEED && pwm != 0) {
+  if(pwm < SLOW_SPEED && pwm != 150) {
     pwm = SLOW_SPEED;
+  }
+  if(pwm == 150) {
+    pwm = 0;
   }
   analogWrite(ENA,pwm);
 }
  
-void turn(int angle)
+void turn(int steering_angle)
 {
-  if (angle > 180) {
-    angle = 180;
+  unsigned int adjusted_angle = steering_angle + 130;
+  if (adjusted_angle > 180) {
+    adjusted_angle = 180;
   }
-  if (angle < 85) {
-    angle = 85;
+  if (adjusted_angle < 85) {
+    adjusted_angle = 85;
   }
-  head.write(angle);
+  head.write(adjusted_angle);
 
 }
  
@@ -94,7 +98,7 @@ void setup() {
 
 
   head.attach(SERVO_PIN);
-  turn(FRONT);
+  turn(0);
   stop_Stop();
   Serial.begin(9600);
   while (!Serial){
@@ -124,9 +128,9 @@ void auto_tracking(){
       int steering = atoi(buffer);
       Serial.println(steering);      
       turn(steering);
-      int throttle = buffer[position-3]*100-4800+buffer[position-2]*10-480+buffer[position-1]-48;
-      Serial.println(throttle); 
-      go_Advance(throttle);      
+      unsigned int throttle_percentage = buffer[position-2]*10-480+buffer[position-1]-48;
+      Serial.println(throttle_percentage); 
+      go_Advance(throttle_percentage);      
       position = 0;
     }
   }
