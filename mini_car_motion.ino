@@ -2,7 +2,7 @@
  *  Motion Uno code done
  * Protocol: [+-,#,#,:,#,#]
  * Steering angle (-45,+45) : Throttle percentage (00,99)
- * !Need to import two digits for throttle percentage 
+ * !Need to send two digits for throttle percentage 
  * Robert Box
  */
  
