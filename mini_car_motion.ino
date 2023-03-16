@@ -17,11 +17,11 @@
 #define IN1 7
 #define IN2 8
 #define ENA 5       //  ENA pin
- 
+#define MESSAGE_LENGTH 16
 
 #define FRONT 130 // MAX 180,       // steering to front 
 int SHARP_RIGHT=FRONT+50; // max +50
-int SHARP_LEFT=FRONT-50; // max -50
+int SHARP_LEFT=FRONT-45; // max -45
 int  RIGHT=FRONT+10;
 int  LEFT=FRONT-10;
 
@@ -34,9 +34,9 @@ int  LEFT=FRONT-10;
 #define LFSensor_4 A4  //OLD D10
  
 
-#define SPEED 150
-#define FAST_SPEED 200 
-#define MID_SPEED 180
+#define SLOW_SPEED 150 // at 150 does not start moving on its own
+#define FAST_SPEED 250 // maximum speed
+#define MID_SPEED 200
 #define SERVO_PIN    9  //servo connect to D3
  
 PWMServo head;
@@ -49,19 +49,29 @@ void go_Back(int speed)  //Forward
    analogWrite(ENA,speed);
 }
  
-void go_Advance(int speed)  //Forward
+void go_Advance(int pwm)
 {
 
   digitalWrite(IN1, LOW);
   digitalWrite(IN2,HIGH);
  
-
-   analogWrite(ENA,speed);
+  if(pwm > FAST_SPEED) {
+    pwm = FAST_SPEED;    
+  }
+  if(pwm < SLOW_SPEED && pwm != 0) {
+    pwm = SLOW_SPEED;
+  }
+  analogWrite(ENA,pwm);
 }
  
 void turn(int angle)
 {
-
+  if (angle > 180) {
+    angle = 180;
+  }
+  if (angle < 85) {
+    angle = 85;
+  }
   head.write(angle);
 
 }
@@ -78,12 +88,12 @@ void stop_Stop()    //Stop
   
 void setup() {
 
- pinMode(ENA, OUTPUT); 
- pinMode(IN1, OUTPUT); 
- pinMode(IN2, OUTPUT); 
+  pinMode(ENA, OUTPUT); 
+  pinMode(IN1, OUTPUT); 
+  pinMode(IN2, OUTPUT); 
 
 
- head.attach(SERVO_PIN);
+  head.attach(SERVO_PIN);
   turn(FRONT);
   stop_Stop();
   Serial.begin(9600);
@@ -95,29 +105,33 @@ void setup() {
 
  
 void loop() {
- auto_tracking();
+  auto_tracking();
 }
 
 void auto_tracking(){
-  char buffer[16];
-  if (Serial.available() > 0){
-    int size = Serial.readBytesUntil('\n', buffer, 12);
-    if (buffer[0] == 'r'){
-      turn(RIGHT);
-    }
-    if (buffer[0] == 'l'){
-      turn(LEFT);
-    }
-    if (buffer[0] == 'R'){
-      turn(SHARP_RIGHT);
-    }
-    if (buffer[0] == 'L'){
-      turn(SHARP_LEFT);
-    }
-    if (buffer[0] == 'f'){
-      turn(FRONT);
+  while(Serial.available()>0) {
+    static char buffer[MESSAGE_LENGTH];
+    static unsigned int position = 0;
+    char inByte = Serial.read();    
+
+    if(inByte != '\n') {  // && (position < MESSAGE_LENGTH-1)
+      buffer[position] = inByte;
+      position++;
+    } else {
+      buffer[position] = '\0';
+      Serial.println(buffer);
+
+      int steering = atoi(buffer);
+      Serial.println(steering);      
+      turn(steering);
+      int throttle = buffer[position-3]*100-4800+buffer[position-2]*10-480+buffer[position-1]-48;
+      Serial.println(throttle); 
+      go_Advance(throttle);      
+      position = 0;
     }
   }
-
-
 }
+
+
+
+
