@@ -1,0 +1,78 @@
+package bumblee;
+
+struct gps_command
+{
+	double x;
+	double y;
+	double p;
+	double q;
+
+}
+
+struct action_command
+{
+	int16_t leftspeed;
+	int16_t rightspeed;
+
+}
+
+struct arduino_in
+{
+	int16_t extreme_left;
+	int16_t extreme_right;
+	int16_t left;
+	int16_t right;
+	int16_t center;
+	int64_t encoder_left;
+	int64_t encoder_right;
+	int8_t motorEnable;
+	int16_t extra_io1;
+	int16_t extra_io2;
+	int16_t distance;
+	int16_t status;
+
+}
+
+struct collision_robots
+{
+	int16_t robots_len;
+	double collision_array[robots_len][5];
+
+}
+
+struct cyborg_detection
+{
+	int16_t detectSize;
+	double data[detectSize][3];
+	int16_t light_state;
+
+}
+
+struct arduino_out
+{
+	int16_t leftspeed;
+	int16_t rightspeed;
+	int8_t motorEnable;
+	int16_t io_device1;
+	int16_t io_device2;
+	int16_t io_device3;
+
+}
+
+struct platooning
+{
+
+	int8_t myId;
+	int8_t platoonId;
+	int8_t role;
+	int8_t startStop;
+	int8_t laneId;
+	int8_t laneChange;
+	int8_t mySpeed;
+	int8_t currentLeader;
+
+}
+
+
+
+
