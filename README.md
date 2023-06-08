@@ -1,4 +1,11 @@
 # ECE129-Capstone
-Scott, Vela, Ashwin, Ben, Robert, Harrison
-test
-Repository for UCSC's self driving car Capstone project
+
+Scott, Vela, Robert
+Repository for UCSC's Self Driving Car Capstone project
+
+## Getting Started
+
+Download ROS Noetic using the installition guide found in the website of ROS Noetic
+
+Install all python packages using the pip3 command.
+` Hello World`
