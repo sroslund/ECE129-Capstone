@@ -8,4 +8,9 @@ Repository for UCSC's Self Driving Car Capstone project
 Download ROS Noetic using the installition guide found in the website of ROS Noetic
 
 Install all python packages using the pip3 command.
-` Hello World`
+
+` pip3 install math `
+` pip3 install datetime `
+` pip3 install sys `
+` pip3 install numpy `
+` pip3 install logging `
