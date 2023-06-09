@@ -14,3 +14,7 @@ Install all python packages using the pip3 command.
 ` pip3 install sys `
 ` pip3 install numpy `
 ` pip3 install logging `
+
+## Getting Hardware Setup 
+
+Plug in the Camera into a USB-A
